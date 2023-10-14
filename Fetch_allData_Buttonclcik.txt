@@ -1,0 +1,440 @@
+<html>
+
+<head>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <style>
+    .btn1 {
+
+      background-color: #555;
+
+      color: white;
+
+      float: left;
+
+      border: none;
+
+      outline: none;
+
+      cursor: pointer;
+
+      padding: 14px 16px;
+
+      font-size: 17px;
+
+      width: 110%;
+
+      overflow-wrap: break-word;
+
+    }
+
+    .btn1:hover {
+
+      background-color: #777;
+
+    }
+
+    .class1 {
+
+      color: white;
+
+      display: none;
+
+      padding: 100px;
+
+      text-align: center;
+
+      border: 1px solid rgba(255, 51, 0, 0.801);
+
+      margin: 35px;
+
+    }
+
+    ul {
+
+      list-style-type: none;
+
+      margin: 0;
+
+      padding: 0;
+
+      overflow: hidden;
+
+      background-color: #333;
+
+      position: fixed;
+
+      top: 0;
+
+      width: 100%;
+
+    }
+
+    li {
+
+      float: left;
+
+    }
+
+    li a {
+
+      display: block;
+
+      color: white;
+
+      text-align: center;
+
+      padding: 14px 16px;
+
+      text-decoration: none;
+
+    }
+
+    li a:hover {
+
+      background-color: #111;
+
+    }
+
+    #postid {
+
+      background-color: rgb(255, 166, 0);
+
+    }
+
+    #Commentsid {
+
+      background-color: rgb(255, 177, 8);
+
+    }
+
+    #Albumsid {
+
+      background-color: rgb(255, 187, 0);
+
+    }
+
+    #Photosid {
+
+      background-color: rgb(255, 177, 8);
+
+    }
+
+    #Todoid {
+
+      background-color: orange;
+
+    }
+
+    #Usersid {
+
+      background-color: rgb(255, 158, 2);
+
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <ul>
+
+    <li><button class="btn1" onclick="openCity('postid', this)" id="Pbtn">Post</button></li>
+
+    <li><button class="btn1" onclick="openCity('Commentsid', this)" id="cmtbtn">Comments</button></li>
+
+    <li><button class="btn1" onclick="openCity('Albumsid', this)" id="albbtn">Albums</button></li>
+
+    <li><button class="btn1" onclick="openCity('Photosid', this)" id="phbtn">Photos</button></li>
+
+    <li><button class="btn1" onclick="openCity('Todoid', this)" id="tobtn">Todos</button></li>
+
+    <li><button class="btn1" onclick="openCity('Usersid', this)" id="userbtn">User</button></li>
+
+  </ul>
+
+  <div id="postid" class="class1" style="padding:20px;">
+
+    <h1 style="color: rgb(238, 255, 251);">POST</h1>
+
+    <p>jsonplaceholder</p>
+
+  </div>
+
+  <div id="Commentsid" class="class1" style="padding:20px;">
+
+    <h1 style="color: rgb(253, 250, 250);">COMMENTS</h1>
+
+  </div>
+
+  <div id="Albumsid" class="class1" style="padding:20px;">
+
+    <h1 style="color: rgb(255, 254, 254);">ALBUMS</h1>
+
+  </div>
+
+  <div id="Photosid" class="class1" style="padding:20px;">
+
+    <h1 style="color: rgb(255, 254, 254);">PHOTOS</h1>
+
+  </div>
+
+  <div id="Todoid" class="class1" style="padding:20px;">
+
+    <h1 style="color: rgb(252, 241, 241);">TODOS</h1>
+
+  </div>
+
+  <div id="Usersid" class="class1" style="padding:20px;">
+
+    <h1 style="color: rgb(245, 253, 253);">USERS</h1>
+
+  </div>
+
+  <table>
+
+    <tr>
+
+      <div id="out">
+
+
+      </div>
+
+      <div id="out">
+
+      </div>
+
+    </tr>
+
+  </table>
+
+</body>
+
+<script>
+
+  function openCity(cityName, elmnt, color) {
+    var i, class1, btn1;
+
+    class1 = document.getElementsByClassName("class1");
+
+    for (i = 0; i < class1.length; i++) {
+
+      class1[i].style.display = "none";
+
+    }
+
+    btn1 = document.getElementsByClassName("btn1");
+
+    for (i = 0; i < btn1.length; i++) {
+
+      btn1[i].style.backgroundColor = "";
+
+    }
+
+    document.getElementById(cityName).style.display = "block";
+
+    elmnt.style.backgroundColor = "black";
+
+  }
+
+  //calling post button
+  $(document).ready(function () {
+
+    $("#Pbtn").click(function () {
+
+      $.ajax({
+
+        url: "https://jsonplaceholder.typicode.com/posts", success: function (result) {
+
+          //  type : 'Get',
+          $("#out").empty();
+
+          for (var i = 0; i < result.length; i++) {
+
+            var title = "<div style='background-color:rgb(137, 230, 230);'><h3><center>" + result[i].title + "</center></h3></div>"
+
+            var body = "<div style='background-color: rgb(252, 240, 240);'>" + result[i].body + "</div>"
+
+            var main = "<div style=padding: 10px;margin: 10px;'>" + title + " " + body + "</div>";
+
+            $("#out").append(main);
+
+          }
+
+        }
+
+      });
+
+    });
+
+  });
+
+  //calling comments button
+
+  $(document).ready(function () {
+
+    $("#cmtbtn").click(function () {
+
+      $.ajax({
+
+        url: "https://jsonplaceholder.typicode.com/comments", success: function (result) {
+
+
+          $("#out").empty();
+
+          for (var i = 0; i < result.length; i++) {
+
+            var title = "<div style='background-color:rgb(137, 230, 230);'><h3><center>" + result[i].name + "</center></h3></div>";
+
+            var body = "<div style='background-color: rgb(252, 240, 240);'>" + result[i].body + "</div>";
+
+            var main = "<div style=padding: 10px;margin: 10px;'>" + title + " " + body + "</div>";
+
+            $("#out").append(main);
+
+          }
+
+        }
+
+      });
+
+    });
+
+  });
+
+  //calling album button
+
+  $(document).ready(function () {
+
+    $("#albbtn").click(function () {
+
+      $.ajax({
+
+        url: "https://jsonplaceholder.typicode.com/albums", success: function (result) {        
+
+          $("#out").empty();
+
+          for (var i = 0; i < result.length; i++) {
+
+            var title = "<div style='background-color:rgb(137, 230, 230);'><h3><center>" + result[i].userId + "</center></h3></div>";
+
+            var body = "<div style='background-color: rgb(252, 240, 240);'>" + result[i].title + "</div>";
+
+            var main = "<div style=padding: 10px;margin: 10px;'>" + title + " " + body + "</div>";
+
+            $("#out").append(main);
+
+          }
+
+        }
+
+      });
+
+    });
+
+  });
+
+  //calling photos button
+
+  $(document).ready(function () {
+    
+    $("#phbtn").click(function () {
+
+      $.ajax({
+
+        url: "https://jsonplaceholder.typicode.com/photos", success: function (result) {
+
+          $("#out").empty();
+
+          for (var i = 0; i < result.length; i++) {
+
+            var title = "<div style='background-color:rgb(137, 230, 230);'><h3><center>" + result[i].title + "</center></h3></div>";
+
+            var body = "<div style='background-color: rgb(252, 240, 240);'>" + result[i].thumbnailUrl + "</div>";
+
+            var main = "<div style=padding: 10px;margin: 10px;'>" + title + " " + body + "</div>";
+
+            $("#out").append(main);
+
+          }
+
+        }
+
+      });
+
+    });
+
+  });
+
+  //calling Todos button
+
+  $(document).ready(function () {
+
+    $("#tobtn").click(function () {
+
+      $.ajax({
+
+        url: "https://jsonplaceholder.typicode.com/todos", success: function (result) {
+
+
+          $("#out").empty();
+
+          for (var i = 0; i < result.length; i++) {
+
+            var title = "<div style='background-color:rgb(137, 230, 230);'><h3><center>" + result[i].title + "</center></h3></div>";
+
+            var body = "<div style='background-color: rgb(252, 240, 240);'>" + result[i].completed + "</div>";
+
+            var main = "<div style=padding: 10px;margin: 10px;'>" + title + " " + body + "</div>";
+
+            $("#out").append(main);
+
+          }
+
+        }
+
+      });
+
+    });
+
+  });
+
+
+  //calling users button
+
+  $(document).ready(function () {
+
+    $("#userbtn").click(function () {
+
+      $.ajax({
+
+        url: "https://jsonplaceholder.typicode.com/users", success: function (result) {
+
+
+          $("#out").empty();
+
+          for (var i = 0; i < result.length; i++) {
+
+            var title = "<div style='background-color:rgb(137, 230, 230);'><h3><center>" + result[i].name + "</center></h3></div>";
+
+            var body = "<div style='background-color: rgb(252, 240, 240);'>" + result[i].email + "</div>";
+
+            var main = "<div style=padding: 10px;margin: 10px;'>" + title + " " + body + "</div>";
+
+            $("#out").append(main);
+
+          }
+
+        }
+
+      });
+
+    });
+    
+  });
+
+
+</script>
+
+</html>

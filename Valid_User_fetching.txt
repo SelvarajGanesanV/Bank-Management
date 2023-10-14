@@ -1,0 +1,160 @@
+<html>
+
+<head>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+</head>
+
+<body>
+
+    <center>
+
+        <input type="text" id="Ent_txt" placeholder="Enter your Mail Id">
+
+        <input type="submit" value="Check Me" id="submit_btn" disabled>
+
+        <br>
+
+        <hr><br>
+
+        <table border="1">
+
+            <thead bgcolor="orange" style="color:white" ;>
+
+                <th> User Id </th>
+
+                <th> Name </th>
+
+                <th> UserName </th>
+
+                <th> Address</th>
+
+            <tbody id="results">
+
+            </tbody>
+
+            </thead>
+
+        </table>
+
+    </center>
+
+</body>
+
+<script>
+
+    var check = [];
+
+    var velidation = false;
+
+    var storage = [];
+
+    var email;
+
+    var storage1 = [];
+
+    $.ajax({
+
+        url: "https://jsonplaceholder.typicode.com/users",
+
+        type: 'GET',
+
+        success: function (res) {
+
+            $.each(res, function (key, value) {
+
+                
+                storage.push(value.email);
+
+            });
+         
+        }
+
+
+    });
+
+    $('input').change(function () {
+
+       
+        velidation = false;
+
+        for (j = 0; j < check.length; j++) {
+
+          
+            if ($("#Ent_txt").val() == check[j]) {
+
+                $("#submit_btn").prop('disabled', true);
+
+                velidation = true;
+
+                break;
+
+            }
+
+        }
+
+        for (i = 0; i < storage.length; i++) {
+
+        
+            if ($("#Ent_txt").val() == storage[i]) {
+
+                debugger;
+
+                if (velidation == false) {
+
+                    email = storage[i];
+
+                    $.ajax({
+
+                        url: "https://jsonplaceholder.typicode.com/users?email=" + email,
+
+                        type: 'GET',
+
+                        success: function (response) {
+
+                            debugger;
+
+                            console.log(response);
+
+                            $.each(response, function (key, value) {
+
+                                //storage += value.email+",";
+
+                                storage1 += '<tr><td>' + value.id + '</td><td>' + value.name + '</td><td>' + value.username + '</td><td>' + value.address.city + '</td></tr>';
+
+                            });
+
+                            check.push(email);
+
+                            console.log(check);
+
+                        }
+
+                    });
+
+                    $("#submit_btn").prop("disabled", false);
+
+                    console.log("Email:: " + email);
+
+                    break;
+
+                }
+
+            }
+
+            else {
+
+                $("#submit_btn").prop('disabled', true);
+              
+               
+            }
+
+        }
+    });
+    
+    $("#submit_btn").click(function () {
+
+        $("#results").html(storage1);
+
+    });

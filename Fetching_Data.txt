@@ -1,0 +1,59 @@
+<html>
+
+<head>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+
+    <table border="1">
+
+        <thead>
+
+            <th> User id </th>
+
+            <th> id </th>
+
+            <th> Title </th>
+
+            <th> completed status </th>
+
+        <tbody id="results">
+
+        </tbody>
+
+        </thead>
+
+    </table>
+
+</body>
+
+<script>
+
+    var respose_data = "";
+
+    $.ajax({
+
+        url: "https://jsonplaceholder.typicode.com/todos",
+
+        type: 'GET',
+
+        success: function (res) {
+
+            debugger;
+
+            $.each(res, function (key, value) {
+
+                respose_data += '<tr><td>' + value.userId + '</td><td>' + value.id + '</td><td>' + value.title + '</td><td>' + value.completed + '</td></tr>';
+
+            });
+
+            $("#results").html(respose_data);
+        }
+
+    });
+</script>
+
+</html>-
