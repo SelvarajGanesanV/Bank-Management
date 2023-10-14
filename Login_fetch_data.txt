@@ -1,0 +1,515 @@
+N<!DOCTYPE html>
+
+<head>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.js">
+
+  </script>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <link rel="stylesheet" href="ajax.css">
+
+</head>
+
+<body>
+
+  <div id="next" style="display: none;">
+
+    <center>
+
+      <ul>
+
+        <center>
+
+          <li><button class="submit" onclick="openCity('postid', this)" id="Pbtn"> <i
+                class="material-icons">&#xe439;</i>Post</button></li>
+
+          <li><button class="submit" onclick="openCity('Commentsid', this)" id="cmtbtn"><i
+                class="material-icons">&#xe0b9;</i>Comments</button></li>
+
+          <li><button class="submit" onclick="openCity('Albumsid', this)" id="albbtn"><i
+                class="material-icons">&#xe41d;</i>Albums</button></li>
+
+          <li><button class="submit" onclick="openCity('Photosid', this)" id="phbtn"><i
+                class="material-icons">&#xe8a7;</i>Photos</button></li>
+
+          <li><button class="submit" onclick="openCity('Todoid', this)" id="tobtn"><i
+                class="material-icons">&#xe002;</i>Todos</button></li>
+
+          <li><button class="submit" onclick="openCity('Usersid', this)" id="userbtn"><i
+                class="material-icons">&#xe7fb;</i>User</button></li>
+
+          <li><button class="submit" onclick="openCity('logid', this)" id="logout"><i
+                class="material-icons">&#xe88a;</i>Logout</button></li>
+
+        </center>
+
+      </ul>
+
+  </div>
+
+  </center>
+
+  <center>
+
+    <div id="body">
+
+      <div id="first" class="main">
+
+        <img src="images (1).jpg" alt="Girl in a jacket" style="width:200px;height:200px;">
+
+        <br>
+
+        <br>
+
+        <input type="text" class="un" id="Ent_txt" placeholder="Enter Your Username">
+
+        <input type="text" class="un" id="Ent_txt1" placeholder="Enter Your EmailID">
+
+        <br>
+
+        <br>
+
+        <input type="submit" value="Login" class="submit" id="submit_btn" disabled>
+
+      </div>
+
+    </div>
+
+    <div id="body2" style="  background: linear-gradient(to right, #2C3E50 , #9bcbe7);">
+
+      <div id="postid" class="class1" style="padding:20px;">
+
+        <h1 style="color: rgb(255, 255, 255);">POST</h1>
+
+        <p>
+
+        <h3>jsonplaceholder</h3>
+
+        </p>
+
+      </div>
+
+      <div id="Commentsid" class="class1" style="padding:20px;">
+
+        <h1 style="color: rgb(255, 255, 255);">COMMENTS</h1>
+
+        <p>
+
+        <h3>jsonplaceholder</h3>
+
+        </p>
+
+      </div>
+
+      <div id="Albumsid" class="class1" style="padding:20px;">
+
+        <h1 style="color: rgb(255, 255, 255);">ALBUMS</h1>
+
+        <p>
+
+        <h3>jsonplaceholder</h3>
+
+        </p>
+
+      </div>
+
+      <div id="Photosid" class="class1" style="padding:20px;">
+
+        <h1 style="color: rgb(255, 255, 255);">PHOTOS</h1>
+
+        <p>
+
+        <h3>jsonplaceholder</h3>
+
+        </p>
+
+      </div>
+
+      <div id="Todoid" class="class1" style="padding:20px;">
+
+        <h1 style="color: rgb(255, 255, 255);">TODOS</h1>
+
+        <p>
+
+        <h3>jsonplaceholder</h3>
+
+        </p>
+
+      </div>
+
+      <div id="Usersid" class="class1" style="padding:20px;">
+
+        <h1 style="color: rgb(245, 253, 253);">USERS</h1>
+
+        <p>
+
+        <h3>jsonplaceholder</h3>
+
+        </p>
+
+      </div>
+
+      <table>
+
+        <tr>
+
+          <div id="out">
+
+
+          </div>
+
+          <div id="out">
+
+          </div>
+
+        </tr>
+
+      </table>
+
+    </div>
+
+
+</body>
+
+<script>
+
+  var id = [];
+
+  var postid = [];
+
+  var albumid = [];
+
+  var check = [];
+
+  var check1 = [];
+
+  var velidation = false;
+
+  var storage = [];
+
+  var email = [];
+
+  var storage1 = [];
+
+  var username = [];
+
+  var cmail = [];
+
+  var username1;
+
+  var mail = [];
+
+  $.ajax({
+
+    url: "https://jsonplaceholder.typicode.com/users",
+
+    type: 'GET',
+
+    success: function (res) {
+
+      $.each(res, function (key, value) {
+
+        storage.push(value.username);
+
+      });
+
+    }
+  });
+
+  $('input').change(function () {
+
+    velidation = false;
+
+    for (j = 0; j < check.length; j++) {
+
+      if ($("#Ent_txt").val() == check[j]) {
+
+        $("#submit_btn").prop('disabled', true);
+
+        velidation = true;
+
+        break;
+
+      }
+
+    }
+
+
+    for (i = 0; i < storage.length; i++) {
+
+      if ($("#Ent_txt").val() == storage[i]) {
+
+        console.log(storage)
+
+        if (velidation == false) {
+
+          username = storage[i];
+
+          $.ajax({
+
+            url: "https://jsonplaceholder.typicode.com/users?username=" + username,
+
+            type: 'GET',
+
+            success: function (response) {
+
+              console.log(response);
+
+              $.each(response, function (key, value) {
+
+                storage1 += '<tr><td>' + value.id + '</td><td>' + value.name + '</td><td>' + value.email + '</td><td>' + value.address.city + '</td><td>' + value.phone + '</td></tr>';
+
+                id.push(value.id);
+
+                cmail.push(value.email);
+
+                console.log(cmail);
+
+              });
+
+              $("#submit_btn").prop('disabled', true);
+
+              check.push(username);
+
+            }
+
+          });
+
+        }
+
+        if ($("#Ent_txt1").val() == cmail) {
+
+          $("#submit_btn").prop("disabled", false);
+
+          break;
+
+        }
+
+      }
+
+      else {
+
+        $("#submit_btn").prop('disabled', true);
+
+      }
+
+    }
+
+  });
+
+  //calling post button
+
+
+  $("#submit_btn").click(function () {
+
+    $("#Pbtn").click(function () {
+
+      $.ajax({
+
+        url: "https://jsonplaceholder.typicode.com/posts?userId=" + id,
+
+        success: function (result) {
+
+          //  type : 'Get',
+          $("#out").empty();
+
+          for (var i = 0; i < result.length; i++) {
+
+            var pid = result[i].id;
+
+            var title = "<div style='background-color:rgb(137, 230, 230);'><h3><center>" + result[i].title + "</center></h3></div>"
+
+            var body = "<div style='background-color: rgb(252, 240, 240);'>" + result[i].body + "</div>"
+
+            var main = "<div style=padding: 10px;margin: 10px;'>" + title + " " + body + "</div>";
+
+            $("#out").append(main);
+
+          }
+
+          postid.push(pid);
+
+        }
+
+      });
+
+    });
+
+    //calling comments button 
+
+    $("#cmtbtn").click(function () {
+
+      $.ajax({
+
+        url: "https://jsonplaceholder.typicode.com/comments?postId=" + postid,
+
+        success: function (result) {
+
+          $("#out").empty();
+
+          for (var i = 0; i < result.length; i++) {
+
+            var title = "<div style='background-color:rgb(137, 230, 230);'><h3><center>" + result[i].name + "</center></h3></div>";
+
+            var body = "<div style='background-color: rgb(252, 240, 240);'>" + result[i].body + "</div>";
+
+            var main = "<div style=padding: 10px;margin: 10px;'>" + title + " " + body + "</div>";
+
+            $("#out").append(main);
+
+          }
+
+        }
+
+      });
+
+    });
+
+    //calling album button
+
+    $("#albbtn").click(function () {
+
+      $.ajax({
+
+        url: "https://jsonplaceholder.typicode.com/albums?userId=" + id,
+        success: function (result) {
+
+          //  type : 'Get',
+          $("#out").empty();
+          for (var i = 0; i < result.length; i++) {
+            var albid = result[i].id;
+            var title = "<div style='background-color:rgb(137, 230, 230);'><h3><center>" + result[i].userId + "</center></h3></div>"
+            var body = "<div style='background-color: rgb(252, 240, 240);'>" + result[i].title + "</div>"
+            var main = "<div style=padding: 10px;margin: 10px;'>" + title + " " + body + "</div>";
+            $("#out").append(main);
+          }
+          albumid.push(albid);
+        }
+
+      });
+    });
+    //calling photos button
+
+    $("#phbtn").click(function () {
+      $.ajax({
+        url: "https://jsonplaceholder.typicode.com/photos?albumId=" + albumid, success: function (result) {
+
+          $("#out").empty();
+          for (var i = 0; i < result.length; i++) {
+            var title1 = "<div style='background-color:rgb(137, 230, 230);'><h3><center>" + result[i].id + "</center></h3></div>";
+            var title = "<div style='background-color:rgb(137, 230, 230);'><h3><center>" + result[i].title + "</center></h3></div>";
+            var body = "<div style='background-color: rgb(252, 240, 240);'>" + result[i].url + "</div>";
+            var body1 = "<div style='background-color: rgb(252, 240, 240);'>" + result[i].thumbnailUrl + "</div>";
+            var main = "<div style=padding: 10px;margin: 10px;'>" + title1 + " " + body + "" + body1 + "" + title + "</div>";
+            $("#out").append(main);
+          }
+        }
+      });
+    });
+    //calling Todos button
+
+    $("#tobtn").click(function () {
+      $.ajax({
+        url: "https://jsonplaceholder.typicode.com/todos?userId=" + id, success: function (result) {
+          //  type : 'Get',
+          $("#out").empty();
+
+          for (var i = 0; i < result.length; i++) {
+
+            var title = "<div style='background-color:rgb(137, 230, 230);'><h3><center>" + result[i].id + "</center></h3></div>"
+
+            var body = "<div style='background-color: rgb(252, 240, 240);'>" + result[i].title + "</div>"
+
+            var body1 = "<div style='background-color: rgb(252, 240, 234);'><b>" + result[i].completed + "</b></div>"
+
+            var main = "<div style=padding: 10px;margin: 10px;'>" + title + " " + body + "" + body1 + "</div>";
+
+            $("#out").append(main);
+
+          }
+
+        }
+
+      });
+
+    });
+
+    //calling users button
+
+    $("#userbtn").click(function () {
+
+      $.ajax({
+
+        url: "https://jsonplaceholder.typicode.com/users?id=" + id, success: function (result) {
+
+          $("#out").empty();
+
+          for (var i = 0; i < result.length; i++) {
+
+            var title1 = "<div style='background-color:rgb(137, 230, 230);'><h3><center>" + result[i].id + "</center></h3></div>";
+
+            var title = "<div style='background-color:rgb(137, 230, 230);'><h3><center>" + result[i].name + "</center></h3></div>";
+
+            var body = "<div style='background-color: rgb(252, 240, 240);'>" + result[i].email + "</div>";
+
+            var body1 = "<div style='background-color: rgb(252, 240, 240);'>" + result[i].address.street + "</div>";
+
+            var main = "<div style=padding: 10px;margin: 10px;'>" + title1 + " " + title + "" + body + "" + body1 + "</div>";
+
+            $("#out").append(main);
+
+          }
+
+        }
+
+      });
+
+    });
+
+    $("#next").show();
+
+    $("#first").hide();
+
+  });
+
+  //calling logout button
+
+  $("#logout").click(function () {
+
+    location.reload();
+
+  });
+
+  //call and diplay the  divsion of the elements
+
+  function openCity(cityName, elmnt, color) {
+
+    var i, class1, submit;
+
+    class1 = document.getElementsByClassName("class1");
+
+    for (i = 0; i < class1.length; i++) {
+
+      class1[i].style.display = "none";
+
+    }
+
+    submit = document.getElementsByClassName("submit");
+
+    for (i = 0; i < submit.length; i++) {
+
+      submit[i].style.backgroundColor = "";
+
+    }
+
+    document.getElementById(cityName).style.display = "block";
+
+    elmnt.style.backgroundColor = "black";
+
+  }
+
+</script>
+
+</html>
